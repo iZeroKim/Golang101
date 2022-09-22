@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"strings"
 )
 
 func displayHeading(){
@@ -38,18 +39,23 @@ func main(){
 	var isRunning bool
 	isRunning = true
 
-	fmt.Println(getComputerChoice())
-
+	var choice string
 	for isRunning {
-		fmt.Printf("Enter Rock, Paper or Scissor. Enter End to end the game: ")
+		fmt.Printf("Enter Rock, Paper or Scissors. Enter End to end the game: ")
 
-		var choice string
+		
 		fmt.Scan(&choice)
-		if choice == "end" {
+		choiceSmall := strings.ToLower(choice)
+		if choiceSmall == "end" {
 			fmt.Println("Game Ended")
 			isRunning = false
 		} else {
-			fmt.Println(choice)
+			if choiceSmall == "rock" || choiceSmall == "paper" || choiceSmall ==  "scissors"{
+				fmt.Println(choice)
+			} else {
+				fmt.Println("Invalid option. Please select again. ")
+			}
+			
 		}
 	}
 
