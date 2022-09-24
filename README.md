@@ -1,6 +1,6 @@
 # Golang101
 
-This is golang basics. A simple rock, paper, scissor to help learn the go language
+This is golang basics. A simple rock, paper, scissor commandline game to help learn the go language
 
 ## Features
 
