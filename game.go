@@ -23,7 +23,7 @@ func getComputerChoice() string{
 		compChoice = "rock"
 	} else if randomInt == 2 {
 		compChoice = "paper"
-	} else {
+	} else if randomInt == 3 {
 		compChoice = "scissors"
 	}
 	return compChoice
@@ -46,12 +46,38 @@ func main(){
 		
 		fmt.Scan(&choice)
 		choiceSmall := strings.ToLower(choice)
+		computerChoice := getComputerChoice()
 		if choiceSmall == "end" {
 			fmt.Println("Game Ended")
 			isRunning = false
 		} else {
 			if choiceSmall == "rock" || choiceSmall == "paper" || choiceSmall ==  "scissors"{
-				fmt.Println(choice)
+				fmt.Println("You chose : ", choice)
+				fmt.Println("The computer chose : ", computerChoice)
+				if choiceSmall == computerChoice{
+					fmt.Printf("You both selected %v. It's a tie!\n", choiceSmall)
+				} else if choiceSmall == "rock"{
+					if computerChoice == "scissors"{
+						fmt.Println("Rock smashes scissors! You win!")
+					} else{
+						fmt.Println("Paper covers rock! You lose.")
+					}
+				} else if choiceSmall == "paper"{
+					if computerChoice == "rock"{
+						fmt.Println("Paper covers rock! You win!")
+					}else{
+						fmt.Println("Scissors cuts paper! You lose.")
+					}
+				} else if choiceSmall == "scissors"{
+					if computerChoice == "paper"{
+						fmt.Println("Scissors cuts paper! You win!")
+					}else{
+						fmt.Println("Rock smashes scissors! You lose.")
+					}
+				}	
+				fmt.Println()
+
+
 			} else {
 				fmt.Println("Invalid option. Please select again. ")
 			}
