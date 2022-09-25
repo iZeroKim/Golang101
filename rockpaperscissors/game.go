@@ -1,23 +1,23 @@
-package game
+package rockpaperscissors
 
 import (
 	"fmt"
 	"math/rand"
-	"time"
 	"strings"
+	"time"
 )
 
-func displayHeading(){
+func displayHeading() {
 	fmt.Println("Rock, Paper, Scissors!")
 }
 
-func getComputerChoice() string{
+func getComputerChoice() string {
 	var compChoice string
 	min := 1
 	max := 4
 
 	rand.Seed(time.Now().UnixNano())
-	randomInt := rand.Intn(max - min) + min
+	randomInt := rand.Intn(max-min) + min
 
 	if randomInt == 1 {
 		compChoice = "rock"
@@ -30,7 +30,7 @@ func getComputerChoice() string{
 
 }
 
-func main(){
+func main() {
 	displayHeading()
 	fmt.Println("Hello, welcome to the game\n")
 
@@ -43,7 +43,6 @@ func main(){
 	for isRunning {
 		fmt.Printf("Enter Rock, Paper or Scissors. Enter End to end the game: ")
 
-		
 		fmt.Scan(&choice)
 		choiceSmall := strings.ToLower(choice)
 		computerChoice := getComputerChoice()
@@ -51,37 +50,36 @@ func main(){
 			fmt.Println("Game Ended")
 			isRunning = false
 		} else {
-			if choiceSmall == "rock" || choiceSmall == "paper" || choiceSmall ==  "scissors"{
+			if choiceSmall == "rock" || choiceSmall == "paper" || choiceSmall == "scissors" {
 				fmt.Println("You chose : ", choice)
 				fmt.Println("The computer chose : ", computerChoice)
-				if choiceSmall == computerChoice{
+				if choiceSmall == computerChoice {
 					fmt.Printf("You both selected %v. It's a tie!\n", choiceSmall)
-				} else if choiceSmall == "rock"{
-					if computerChoice == "scissors"{
+				} else if choiceSmall == "rock" {
+					if computerChoice == "scissors" {
 						fmt.Println("Rock smashes scissors! You win!")
-					} else{
+					} else {
 						fmt.Println("Paper covers rock! You lose.")
 					}
-				} else if choiceSmall == "paper"{
-					if computerChoice == "rock"{
+				} else if choiceSmall == "paper" {
+					if computerChoice == "rock" {
 						fmt.Println("Paper covers rock! You win!")
-					}else{
+					} else {
 						fmt.Println("Scissors cuts paper! You lose.")
 					}
-				} else if choiceSmall == "scissors"{
-					if computerChoice == "paper"{
+				} else if choiceSmall == "scissors" {
+					if computerChoice == "paper" {
 						fmt.Println("Scissors cuts paper! You win!")
-					}else{
+					} else {
 						fmt.Println("Rock smashes scissors! You lose.")
 					}
-				}	
+				}
 				fmt.Println()
-
 
 			} else {
 				fmt.Println("Invalid option. Please select again. ")
 			}
-			
+
 		}
 	}
 
