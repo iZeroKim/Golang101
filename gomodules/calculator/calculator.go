@@ -6,6 +6,13 @@ import (
 )
 
 func main(){
-	fmt.Println("Calculator App")
+	fmt.Println("Calculator App - Addition only")
+	
+	var firstNum, secondNum int
+	fmt.Printf("First number: ")
+	fmt.Scan(&firstNum)
+
+	fmt.Printf("Second number: ")
+	fmt.Scan(&secondNum)
 
 }
