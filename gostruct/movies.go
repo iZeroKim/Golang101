@@ -12,8 +12,16 @@ type Movie struct{
 	likes int
 }
 
+//Constructor function
+func(movie *Movie) setDefaults(){
+	if movie.likes == 0{
+		movie.likes = 0
+	}
+}
+
 
 func main(){
-	movie1 := Movie{"Last King", "2 hours", "26/09/2022"}	
-	fmt.Println(movie1.title, movie1.length, movie1.release_date, movie1.likes)
+	movie1 := Movie{title:"Last King", length:"2 hours", release_date:"26/09/2022"}	
+	movie1.setDefaults()
+	fmt.Println(movie1)
 }
