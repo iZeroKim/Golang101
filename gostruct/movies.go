@@ -20,9 +20,10 @@ func(movie *Movie) setDefaults(){
 }
 
 //value receiver struct function
-func(movie *Movie) displayMovie(){
+func(movie Movie) displayMovie(){
 	fmt.Printf("Name: %v, Duration: %v, Date Released: %v, Likes: %v", movie.title, movie.length, movie.release_date, movie.likes)
 }
+
 
 func main(){
 	movie1 := Movie{title:"Last King", length:"2 hours", release_date:"26/09/2022"}	
