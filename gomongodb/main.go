@@ -27,4 +27,11 @@ func main(){
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	//check connection
+	connection_err = client.Ping(context.TODO(), nil)
+
+	if connection_err != nil{
+		log.Fatal(connection_err)
+	}
 }
