@@ -5,7 +5,7 @@ import (
 	"context"
 	"log"
 
-	"go.mongodb.org/mongo-driver/bson"
+	
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -29,9 +29,14 @@ func main(){
 	}
 
 	//check connection
-	connection_err = client.Ping(context.TODO(), nil)
+	connection_err := client.Ping(context.TODO(), nil)
 
 	if connection_err != nil{
 		log.Fatal(connection_err)
+	} else {
+		fmt.Println("Connected to MongoDB")
 	}
+
+	booksCollection := client.Database("books").Collection("booklist")
+	
 }
