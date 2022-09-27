@@ -12,5 +12,7 @@ func index(w http.ResponseWriter, r *http.Request){
 func main(){
 	fmt.Println("Simple Go Web Server")
 	http.HandleFunc("/", index)
+	fmt.Println("Server starting...")
 	http.ListenAndServe(":3000", nil)
+	fmt.Println("Server running...")
 }
