@@ -6,8 +6,9 @@ Simple go projects to help me learn Go language.
 * A simple rock, paper, scissor commandline game - uses decision making and loops
 * A simple commandline calculator - made up of two modules. One module is the addition library which is intended to be imported by other libraries or applications and the second one is a caller application which will make use of the first
 * A simple movie app - uses go struct, struct receiver methods(value and pointer) to implement a movie reviews app by liking a movie
+* A simple commandline CRUD books app - uses go struct, error handling, loops, mongodb, Bson to manipulate a collection of books in a Mongo document database.
 
-## Common Features
+## Common Features That cut across most of the projects
 
 * Variables
 * Data types
@@ -16,6 +17,9 @@ Simple go projects to help me learn Go language.
 * Loops
 * Data Validation
 * Modularization
+* Bson
+* Error handling
+* Mongo-driver
 
 ## Screenshots
 ### 1. Rock, Paper, Scissors 
@@ -29,3 +33,5 @@ Simple go projects to help me learn Go language.
 ### 3. Movie App
 
 ![Screenshot (742)](https://user-images.githubusercontent.com/58791465/192417080-1b0ae21c-c80d-4225-a674-4ae7aa0fe9e7.png)
+
+### 4. Books App

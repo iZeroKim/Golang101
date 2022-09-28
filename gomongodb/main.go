@@ -33,7 +33,7 @@ func main(){
 	//check connection
 	connection_err := client.Ping(context, nil)
 
-             	if connection_err != nil{
+    if connection_err != nil{
 		log.Fatal(connection_err)
 	} else {
 		fmt.Println("Connected to MongoDB")
