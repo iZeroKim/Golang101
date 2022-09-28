@@ -40,16 +40,20 @@ func main(){
 	}
 
 	booksCollection := client.Database("books").Collection("bookList")
+	defer booksCollection.Drop(context)
 
 	// Insert one
-	book1 := Book{title: "Go 101", author: "Dennis Maina", pages: 314}
-	insertRes, err = booksCollection.InsertOne(context, book1)
+	book1 := Book{Title: "Go 101", Author: "Dennis Maina", Pages: 314}
+	insertRes, err := booksCollection.InsertOne(context, book1)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Book successfully inserted!")
+	fmt.Printf("Book %v successfully inserted!\n ", insertRes)
 
 
+
+
+	//Fetch all
 	cursor, err := booksCollection.Find(context, bson.M{})
 	if err != nil {
 		log.Fatal(err)
@@ -61,7 +65,7 @@ func main(){
 		if err = cursor.Decode(&book); err!= nil {
 			log.Fatal(err)
 		}
-		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages", book["pages" ])
+		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
 	}
 	
 }
