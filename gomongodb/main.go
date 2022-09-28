@@ -41,6 +41,15 @@ func main(){
 
 	booksCollection := client.Database("books").Collection("bookList")
 
+	// Insert one
+	book1 := Book{title: "Go 101", author: "Dennis Maina", pages: 314}
+	insertRes, err = booksCollection.InsertOne(context, book1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Book successfully inserted!")
+
+
 	cursor, err := booksCollection.Find(context, bson.M{})
 	if err != nil {
 		log.Fatal(err)
