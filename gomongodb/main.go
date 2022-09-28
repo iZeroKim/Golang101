@@ -7,6 +7,7 @@ import (
 
 	
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 type Book struct{
@@ -21,15 +22,16 @@ func main(){
 	// Set mongo db options
 	options := options.Client().ApplyURI("mongodb+srv://kimadmin:16577561KIMsam@cluster1.lt4izot.mongodb.net/?retryWrites=true&w=majority")
 
+	context := context.TODO()
 	//Connect 
-	client, err := mongo.Connect(context.TODO(), options)
+	client, err := mongo.Connect(context, options)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	//check connection
-	connection_err := client.Ping(context.TODO(), nil)
+	connection_err := client.Ping(context, nil)
 
 	if connection_err != nil{
 		log.Fatal(connection_err)
@@ -37,6 +39,20 @@ func main(){
 		fmt.Println("Connected to MongoDB")
 	}
 
-	booksCollection := client.Database("books").Collection("booklist")
+	booksCollection := client.Database("books").Collection("bookList")
+
+	cursor, err := booksCollection.Find(context, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer cursor.Close(context)
+	for cursor.Next(context) {
+		var book bson.M
+		if err = cursor.Decode(&book); err!= nil {
+			log.Fatal(err)
+		}
+		fmt.Println("Book: ", book)
+	}
 	
 }
