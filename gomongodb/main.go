@@ -33,7 +33,7 @@ func main(){
 	//check connection
 	connection_err := client.Ping(context, nil)
 
-	if connection_err != nil{
+             	if connection_err != nil{
 		log.Fatal(connection_err)
 	} else {
 		fmt.Println("Connected to MongoDB")
@@ -52,7 +52,7 @@ func main(){
 		if err = cursor.Decode(&book); err!= nil {
 			log.Fatal(err)
 		}
-		fmt.Println("Book: ", book)
+		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages", book["pages" ])
 	}
 	
 }
