@@ -40,32 +40,18 @@ func main(){
 	}
 
 	booksCollection := client.Database("books").Collection("bookList")
-	//defer booksCollection.Drop(context)
+	defer booksCollection.Drop(context)
 
 	// Insert one
+	fmt.Println("\n\nINSERT ONE OPERATION")
 	book1 := Book{Title: "Go 101", Author: "Dennis Maina", Pages: 314}
 	insertRes, err := booksCollection.InsertOne(context, book1)
-	if err != nil {
+	if err != nil && insertRes != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Book %v successfully inserted!\n ", insertRes)
-
-	//Insert many at a go
-	book2 := Book{Title: "The Giver", Author: "Alex Allan", Pages: 314}
-	book3 := Book{Title: "Goroutines", Author: "Sheila Sharon", Pages: 200}
-	book4 := Book{Title: "The Alchemist", Author: "Dennis Maina", Pages: 394}
-	book5 := Book{Title: "Kafka", Author: "Samuel Kimani", Pages: 520}
-
-	manyBooks := []interface{}{book2, book3, book4, book5}
-	insertMultipleRes, err := booksCollection.InsertMany(context, manyBooks)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("Books %v successfully inserted!\n ", insertMultipleRes)
-
-
-
+	fmt.Printf("One book successfully inserted!\n ")
 	//Fetch all
+	fmt.Println("BookList after insert one:")
 	cursor, err := booksCollection.Find(context, bson.M{})
 	if err != nil {
 		log.Fatal(err)
@@ -80,7 +66,40 @@ func main(){
 		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
 	}
 
+	//Insert many at a go
+	fmt.Println("\n\nINSERT MANY OPERATION")
+	book2 := Book{Title: "The Giver", Author: "Alex Allan", Pages: 314}
+	book3 := Book{Title: "Goroutines", Author: "Sheila Sharon", Pages: 200}
+	book4 := Book{Title: "The Alchemist", Author: "Dennis Maina", Pages: 394}
+	book5 := Book{Title: "Kafka", Author: "Samuel Kimani", Pages: 520}
+
+	manyBooks := []interface{}{book2, book3, book4, book5}
+	insertMultipleRes, err := booksCollection.InsertMany(context, manyBooks)
+	if err != nil && insertMultipleRes != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Multiple books successfully inserted!\n ")
+
+
+
+	//Fetch all
+	fmt.Println("BookList after insert many:")
+	cursor1, err := booksCollection.Find(context, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer cursor1.Close(context)
+	for cursor1.Next(context) {
+		var book bson.M
+		if err = cursor1.Decode(&book); err!= nil {
+			log.Fatal(err)
+		}
+		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
+	}
+
 	//Update one document
+	fmt.Println("\n\nUPDATE OPERATION")
 	filter := bson.D{{"title", "Kafka"}}
 
 	update := bson.D{
@@ -96,21 +115,25 @@ func main(){
 
 	fmt.Printf("%v documents matched, %v documents updated.\n ", updateRes.MatchedCount, updateRes.ModifiedCount)
 	//Fetch all
-	cursor, err = booksCollection.Find(context, bson.M{})
+
+	fmt.Println("BookList after update:")
+	cursor2, err := booksCollection.Find(context, bson.M{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer cursor.Close(context)
-	for cursor.Next(context) {
+	defer cursor2.Close(context)
+	for cursor2.Next(context) {
 		var book bson.M
-		if err = cursor.Decode(&book); err!= nil {
+		if err = cursor2.Decode(&book); err!= nil {
 			log.Fatal(err)
 		}
 		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
 	}
+	
 
-	//Delete document - usng collection.DeleteOne() or collection.DeleteMany()
+	//Delete document - using collection.DeleteOne() or collection.DeleteMany()
+	fmt.Println("\n\nDELETE OPERATION")
 	deleteFilter := bson.D{{"title", "The Alchemist"}}
 
 	deleteOneRes, err := booksCollection.DeleteOne(context, deleteFilter)
@@ -118,5 +141,22 @@ func main(){
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Deleted %v documents", deleteOneRes.DeletedCount)
+	fmt.Printf("Deleted %v documents\n", deleteOneRes.DeletedCount)
+
+	//Fetch all
+
+	fmt.Println("BookList after delete:")
+	cursor3, err := booksCollection.Find(context, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer cursor3.Close(context)
+	for cursor3.Next(context) {
+		var book bson.M
+		if err = cursor3.Decode(&book); err!= nil {
+			log.Fatal(err)
+		}
+		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
+	}
 }
