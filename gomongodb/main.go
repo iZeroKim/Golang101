@@ -50,6 +50,18 @@ func main(){
 	}
 	fmt.Printf("Book %v successfully inserted!\n ", insertRes)
 
+	//Insert many at a go
+	book2 := Book{Title: "The Giver", Author: "Alex Allan", Pages: 314}
+	book3 := Book{Title: "Goroutines", Author: "Sheila Sharon", Pages: 200}
+	book4 := Book{Title: "The Alchemist", Author: "Dennis Maina", Pages: 394}
+	book5 := Book{Title: "Kafka", Author: "Samuel Kimani", Pages: 520}
+
+	manyBooks := []interface{}{book2, book3, book4, book5}
+	insertMultipleRes, err := booksCollection.InsertMany(context, manyBooks)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Books %v successfully inserted!\n ", insertMultipleRes)
 
 
 
