@@ -109,4 +109,14 @@ func main(){
 		}
 		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
 	}
+
+	//Delete document - usng collection.DeleteOne() or collection.DeleteMany()
+	deleteFilter := bson.D{{"title", "The Alchemist"}}
+
+	deleteOneRes, err := booksCollection.DeleteOne(context, deleteFilter)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Deleted %v documents", deleteOneRes.DeletedCount)
 }
