@@ -40,7 +40,7 @@ func main(){
 	}
 
 	booksCollection := client.Database("books").Collection("bookList")
-	defer booksCollection.Drop(context)
+	//defer booksCollection.Drop(context)
 
 	// Insert one
 	book1 := Book{Title: "Go 101", Author: "Dennis Maina", Pages: 314}
@@ -79,5 +79,34 @@ func main(){
 		}
 		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
 	}
+
+	//Update one document
+	filter := bson.D{{"title", "Kafka"}}
+
+	update := bson.D{
+		{"$inc", bson.D{
+				{"pages", 200},
+		}},
+	}
 	
+	updateRes, err := booksCollection.UpdateOne(context, filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%v documents matched, %v documents updated.\n ", updateRes.MatchedCount, updateRes.ModifiedCount)
+	//Fetch all
+	cursor, err = booksCollection.Find(context, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer cursor.Close(context)
+	for cursor.Next(context) {
+		var book bson.M
+		if err = cursor.Decode(&book); err!= nil {
+			log.Fatal(err)
+		}
+		fmt.Println("Book \n\t Name:", book["title"], "\n\t Author:", book["author"] , "\n\t Pages:", book["pages" ])
+	}
 }
