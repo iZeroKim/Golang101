@@ -2,7 +2,7 @@ package main
 
 import ("net/http"
 		"fmt"
-		"text/tempplate"
+		"text/template"
 )
 
 type Info struct{
@@ -25,7 +25,7 @@ func main(){
 	<body>
 		<h3>Hi, {{.Name}}. The fruits are:</h3>
 		<ul>
-			{{range .Fruit}}
+			{{range .Fruits}}
 				<li>
 					{{.}}
 				</li>
@@ -34,6 +34,21 @@ func main(){
 	</body>
 	</html>
 	`
+	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request){
+		w.Header().Add("Content Type", "text/html")
+		templates:= template.New("template")
+		templates.New("doc").Parse(doc)
+		info := Info{
+			"My Fruits",
+			"Kim",
+			[3]string{
+				"Sweet melon",
+				"Water melon",
+				"Pineapple",
+			},
+		}
+		templates.Lookup("doc").Execute(w, info)
+	})
 	fmt.Println("Starting new server at: http://localhost:8000")
 	http.ListenAndServe(":8000", nil)
 }
