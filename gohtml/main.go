@@ -77,4 +77,9 @@ func main(){
 	// })
 	// fmt.Println("Starting new server at: http://localhost:8000")
 	// http.ListenAndServe(":8000", nil)
+
+	router := mux.NewRouter()
+	router.Handle("/", GetRequestHandler).Methods("GET")
+	router.Handle("/post", PostRequestHandler).Methods("POST")
+	router.Handle("/hello/{name}", PassedVariableHandler).Methods("GET", "PUT")
 }
