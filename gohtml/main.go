@@ -82,4 +82,7 @@ func main(){
 	router.Handle("/", GetRequestHandler).Methods("GET")
 	router.Handle("/post", PostRequestHandler).Methods("POST")
 	router.Handle("/hello/{name}", PassedVariableHandler).Methods("GET", "PUT")
+
+	
+	http.ListenAndServe(CONN_HOST+":"+CONN_PORT, router)
 }
