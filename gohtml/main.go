@@ -11,6 +11,10 @@ import ("net/http"
 // 	Name string
 // 	Fruits [3]string
 // }
+const(
+	CONN_HOST ="localhost"
+	CONN_PORT = "8080"
+)
 
 func main(){
 
