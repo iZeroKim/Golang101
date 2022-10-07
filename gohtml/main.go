@@ -28,6 +28,14 @@ var PostRequestHandler = http.HandlerFunc(
 	}
 )
 
+var PassedVariableHandler = http.HandlerFunc(
+	func(w http.ResponseWriter, req *http.Request){
+		variables := mux.Vars(r)
+		name := vars[name]
+		w.Write([]byte("Passed Variable: " + name))
+
+	}
+)
 
 func main(){
 
