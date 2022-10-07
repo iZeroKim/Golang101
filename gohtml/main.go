@@ -17,14 +17,14 @@ const(
 )
 
 var GetRequestHandler = http.HandlerFunc(
-	func(w http.ResponseWriter, req *http.Request){
-		w.Write([]byte("Get request"))
+	func(w http.ResponseWriter, r *http.Request){
+		fmt.Fprintf(w, "<h1>Get Request</h1>")
 	}
 )
 
-var PostRequestHandler = http.HandlerFunc(
+var PostRequestHandler = http.HandlerFunc( 
 	func(w http.ResponseWriter, req *http.Request){
-		w.Write([]byte("Post request"))
+		fmt.Fprintf(w, "<h1>Post Request</h1>")
 	}
 )
 
@@ -32,8 +32,7 @@ var PassedVariableHandler = http.HandlerFunc(
 	func(w http.ResponseWriter, req *http.Request){
 		variables := mux.Vars(r)
 		name := vars[name]
-		w.Write([]byte("Passed Variable: " + name))
-
+		fmt.Fprintf(w, "<h1>Passed Variable: " + name + "</h1>") 
 	}
 )
 
