@@ -16,6 +16,19 @@ const(
 	CONN_PORT = "8080"
 )
 
+var GetRequestHandler = http.HandlerFunc(
+	func(w http.ResponseWriter, req *http.Request){
+		w.Write([]byte("Get request"))
+	}
+)
+
+var PostRequestHandler = http.HandlerFunc(
+	func(w http.ResponseWriter, req *http.Request){
+		w.Write([]byte("Post request"))
+	}
+)
+
+
 func main(){
 
 	// const doc =`
